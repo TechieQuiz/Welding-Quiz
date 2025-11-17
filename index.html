@@ -1,121 +1,156 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Welding Quiz</title>
-  <style>
-    :root{
-      --bg:#f6f8fa; --card:#fff; --accent:#0b74ff; --muted:#6b7280;
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    }
-    body{
-      margin:0;
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:linear-gradient(180deg,#eef2ff 0%, var(--bg) 100%);
-      padding:24px;
-    }
-    .wrap{
-      width:100%;
-      max-width:820px;
-    }
-    header{
-      margin-bottom:18px;
-    }
-    .title{
-      font-size:28px; font-weight:700; color:#0f172a;
-    }
-    .subtitle{ color:var(--muted); margin-top:6px; font-size:13px;}
-    .card{
-      background:var(--card);
-      border-radius:12px;
-      box-shadow:0 6px 20px rgba(7,11,20,0.06);
-      padding:22px;
-    }
-    .question{
-      font-size:18px; color:#0f172a; margin-bottom:14px;
-    }
-    .choices{ display:grid; gap:10px; }
-    .choice{
-      border:1px solid #e6e9ef; padding:12px 14px; border-radius:10px;
-      cursor:pointer; transition:all .12s; background:linear-gradient(180deg, #fff, #fbfdff);
-      display:flex; align-items:center; gap:12px;
-    }
-    .choice:hover{ transform:translateY(-2px); box-shadow:0 6px 18px rgba(9,16,52,0.06); }
-    .choice.selected{ border-color:var(--accent); background:rgba(11,116,255,0.06); }
-    .choice.correct{ border-color: #10b981; background: #ecfdf5; }
-    .choice.wrong{ border-color: #f43f5e; background: #fff1f2; opacity:0.95; }
-    .meta{ display:flex; justify-content:space-between; align-items:center; margin-top:16px; }
-    .btn{
-      padding:10px 14px; border-radius:10px; border:0; cursor:pointer; font-weight:600;
-      background:var(--accent); color:#fff;
-    }
-    .btn.ghost{ background:transparent; color:var(--accent); border:1px solid rgba(11,116,255,0.12); }
-    .explain{
-      margin-top:14px; padding:12px; border-radius:8px; background:#f8fafc; color:var(--muted);
-      font-size:14px; display:none;
-    }
-    .progress{
-      height:8px; background:#eef2f7; border-radius:999px; overflow:hidden;
-    }
-    .bar{ height:100%; background:linear-gradient(90deg,var(--accent),#6ea8ff); width:0%; }
-    .score{
-      font-weight:700; color:#0f172a;
-    }
-    @media (max-width:520px){
-      .title{ font-size:20px; }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Welding Quiz</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #eef2ff;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+
+  h1 {
+    margin-bottom: 5px;
+    font-size: 32px;
+  }
+
+  #sourceInfo {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+  }
+
+  #question {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  #choices .choice {
+    display: flex;
+    align-items: center;
+    border: 2px solid #ccc;
+    padding: 14px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    background: #fafafa;
+  }
+
+  .choice.selected {
+    border-color: #6c5ce7;
+    background: #ece9ff;
+  }
+
+  .choice.correct {
+    border-color: #2ecc71;
+    background: #e8ffe8;
+  }
+
+  .choice.wrong {
+    border-color: #e74c3c;
+    background: #ffe8e8;
+  }
+
+  #nextBtn {
+    padding: 12px 24px;
+    font-size: 18px;
+    border-radius: 10px;
+    background: #6c5ce7;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  #result {
+    display: none;
+    text-align: center;
+    padding: 30px;
+  }
+
+  #restart {
+    padding: 12px 24px;
+    background: #6c5ce7;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    margin-top: 20px;
+    cursor: pointer;
+  }
+
+  #explainBtn {
+    margin-left: 10px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    background: #dfe4ff;
+    cursor: pointer;
+  }
+
+  #explain {
+    display: none;
+    margin-top: 12px;
+    font-size: 16px;
+    padding: 12px;
+    border-left: 4px solid #6c5ce7;
+    background: #f4f4ff;
+  }
+
+  #bar {
+    height: 6px;
+    background: #6c5ce7;
+    margin: 20px 0;
+    border-radius: 4px;
+    width: 0%;
+  }
+</style>
 </head>
+
 <body>
-  <div class="wrap">
-    <header>
-      <div class="title">Welding Quiz</div>
-      <div class="subtitle" id="sourceInfo">Based on 1 source</div>
-    </header>
+<div class="container">
+  <h1>Welding Quiz</h1>
+  <div id="sourceInfo">Based on 0 questions</div>
 
-    <main class="card" id="app">
-      <div id="qcard">
-        <div class="question" id="question">Question text</div>
-        <div class="choices" id="choices"></div>
+  <div id="qcard">
+    <div id="question">Question text</div>
+    <div id="choices"></div>
 
-        <div class="explain" id="explain"></div>
+    <div style="display:flex;align-items:center;margin-top:10px;">
+      <button id="nextBtn">Next</button>
+      <button id="explainBtn">Show Explanation</button>
+    </div>
 
-        <div class="meta">
-          <div style="width:60%">
-            <div style="display:flex;gap:8px;align-items:center;">
-              <div id="qnum" style="color:var(--muted);font-size:13px;">1 / 10</div>
-            </div>
-            <div style="margin-top:10px">
-              <div class="progress"><div class="bar" id="bar"></div></div>
-            </div>
-          </div>
-          <div style="text-align:right">
-            <div class="score" id="score">Score: 0</div>
-            <div style="height:6px"></div>
-            <button class="btn ghost" id="explainBtn" style="display:none">Explain</button>
-            <button class="btn" id="nextBtn">Next</button>
-          </div>
-        </div>
-      </div>
+    <div id="explain"></div>
+    <div id="bar"></div>
 
-      <div id="result" style="display:none;text-align:center;padding:28px">
-        <h2 style="margin:0 0 6px">Quiz completed!</h2>
-        <p id="finalScore" style="margin:0 0 16px;color:var(--muted)">You scored 0 / 0</p>
-        <button class="btn" id="restart">Retry</button>
-      </div>
-    </main>
+    <div style="margin-top:10px;display:flex;justify-content:space-between;">
+      <span id="qnum">1 / 0</span>
+      <span id="score">Score: 0</span>
+    </div>
   </div>
-    // QUESTIONS: Edit this array to add or change questions.
-    // Each item: { q: "question", choices: [...], answer: indexOfCorrectChoice, explain: "explanation" }
-    <script>
-  // QUESTIONS will be loaded from questions.json
+
+  <div id="result">
+    <h2>Quiz Completed!</h2>
+    <p id="finalScore"></p>
+    <button id="restart">Restart</button>
+  </div>
+</div>
+
+<!-- ========== LOADER: FETCH questions.json ========== -->
+<script>
   let questions = [];
 
-  // Add a timestamp to always fetch the latest file (no cached old file)
   function cacheBuster(url) {
     return url + "?v=" + Date.now();
   }
@@ -123,128 +158,123 @@
   async function loadQuestions() {
     try {
       const response = await fetch(cacheBuster("questions.json"));
-      if (!response.ok) {
-        throw new Error("HTTP " + response.status);
-      }
+      if (!response.ok) throw new Error("HTTP " + response.status);
+
       questions = await response.json();
+      if (!Array.isArray(questions) || questions.length === 0)
+        throw new Error("No questions found");
 
-      // safety: if questions is not an array, use a fallback
-      if (!Array.isArray(questions) || questions.length === 0) {
-        throw new Error("No questions found in questions.json");
-      }
-
-      // Start the quiz now that questions are loaded
       render();
     } catch (err) {
-      console.error("Failed to load questions.json:", err);
-      // fallback single message so page still runs
-      questions = [{
-        q: "Error: could not load questions.json. Please check the file in your repo.",
-        choices: ["OK"],
-        answer: 0,
-        explain: ""
-      }];
+      console.error("Loading failed:", err);
+      questions = [
+        {
+          q: "Error loading questions.json",
+          choices: ["OK"],
+          answer: 0,
+          explain: ""
+        }
+      ];
       render();
     }
   }
-
-  // Replace the previous initial render() call — call loader instead
   loadQuestions();
 </script>
 
-    let idx = 0, score = 0, selected = null;
+<!-- ========== QUIZ ENGINE CODE ========== -->
+<script>
+let idx = 0, score = 0, selected = null;
 
-    const el = {
-      question: document.getElementById('question'),
-      choices: document.getElementById('choices'),
-      explain: document.getElementById('explain'),
-      qnum: document.getElementById('qnum'),
-      bar: document.getElementById('bar'),
-      score: document.getElementById('score'),
-      nextBtn: document.getElementById('nextBtn'),
-      explainBtn: document.getElementById('explainBtn'),
-      result: document.getElementById('result'),
-      finalScore: document.getElementById('finalScore'),
-      restart: document.getElementById('restart'),
-      sourceInfo: document.getElementById('sourceInfo')
-    };
+const el = {
+  question: document.getElementById("question"),
+  choices: document.getElementById("choices"),
+  explain: document.getElementById("explain"),
+  qnum: document.getElementById("qnum"),
+  bar: document.getElementById("bar"),
+  score: document.getElementById("score"),
+  nextBtn: document.getElementById("nextBtn"),
+  explainBtn: document.getElementById("explainBtn"),
+  result: document.getElementById("result"),
+  finalScore: document.getElementById("finalScore"),
+  restart: document.getElementById("restart"),
+  sourceInfo: document.getElementById("sourceInfo")
+};
 
-    function render(){
-      selected = null;
-      el.explain.style.display = 'none';
-      el.explainBtn.style.display = 'none';
-      const q = questions[idx];
-      el.question.textContent = q.q;
-      el.choices.innerHTML = '';
-      q.choices.forEach((c,i)=>{
-        const div = document.createElement('div');
-        div.className = 'choice';
-        div.tabIndex = 0;
-        div.innerHTML = `<div style="font-weight:700;min-width:28px;color:#0f172a">${String.fromCharCode(65+i)}</div><div style="flex:1">${c}</div>`;
-        div.addEventListener('click', ()=> choose(i,div));
-        div.addEventListener('keydown', (e)=> { if(e.key === 'Enter') choose(i,div); });
-        el.choices.appendChild(div);
-      });
-      el.qnum.textContent = `${idx+1} / ${questions.length}`;
-      el.bar.style.width = `${(idx)/(questions.length)*100}%`;
-      el.score.textContent = `Score: ${score}`;
-      el.nextBtn.textContent = (idx === questions.length-1) ? 'Finish' : 'Next';
-      el.sourceInfo.textContent = `Based on ${questions.length} questions`;
-    }
+function render() {
+  selected = null;
+  el.explain.style.display = "none";
+  el.explainBtn.style.display = "none";
 
-    function choose(i,dom){
-      if (selected !== null) return;
-      selected = i;
-      const q = questions[idx];
-      const nodes = el.choices.children;
-      for(let n=0;n<nodes.length;n++){
-        nodes[n].classList.remove('selected','correct','wrong');
-      }
-      dom.classList.add('selected');
-      el.explainBtn.style.display = 'inline-block';
-      if(i === q.answer){
-        dom.classList.remove('selected');
-        dom.classList.add('correct');
-        score += 1;
-        el.score.textContent = `Score: ${score}`;
-      } else {
-        dom.classList.remove('selected');
-        dom.classList.add('wrong');
-        nodes[q.answer].classList.add('correct');
-      }
-      el.explain.textContent = q.explain || '';
-      el.explain.style.display = 'block';
-    }
+  let q = questions[idx];
+  el.question.textContent = q.q;
 
-    el.nextBtn.addEventListener('click', ()=>{
-      if (idx < questions.length - 1){
-        idx++;
-        render();
-      } else {
-        showResult();
-      }
-    });
+  el.choices.innerHTML = "";
+  q.choices.forEach((c, i) => {
+    let div = document.createElement("div");
+    div.className = "choice";
+    div.innerHTML = `<b style="width:28px;display:inline-block;color:#6c5ce7;">${String.fromCharCode(65+i)}</b>${c}`;
+    div.addEventListener("click", () => choose(i, div));
+    el.choices.appendChild(div);
+  });
 
-    el.explainBtn.addEventListener('click', ()=> {
-      el.explain.style.display = (el.explain.style.display === 'block') ? 'none' : 'block';
-    });
+  el.qnum.textContent = `${idx+1} / ${questions.length}`;
+  el.bar.style.width = `${((idx+1)/questions.length)*100}%`;
+  el.score.textContent = `Score: ${score}`;
+  el.nextBtn.textContent = (idx === questions.length-1) ? "Finish" : "Next";
+  el.sourceInfo.textContent = `Based on ${questions.length} questions`;
+}
 
-    function showResult(){
-      document.getElementById('qcard').style.display = 'none';
-      el.result.style.display = 'block';
-      el.finalScore.textContent = `You scored ${score} / ${questions.length}`;
-      // Optionally: show restart
-    }
+function choose(i, dom) {
+  if (selected !== null) return;
+  selected = i;
+  let q = questions[idx];
 
-    el.restart.addEventListener('click', ()=>{
-      idx = 0; score = 0;
-      document.getElementById('qcard').style.display = 'block';
-      el.result.style.display = 'none';
-      render();
-    });
+  let nodes = el.choices.children;
+  for (let n of nodes) n.classList.remove("selected","correct","wrong");
 
-    // initialize
+  dom.classList.add("selected");
+  el.explain.textContent = q.explain;
+  el.explainBtn.style.display = "inline-block";
+
+  if (i === q.answer) {
+    dom.classList.add("correct");
+    score++;
+  } else {
+    dom.classList.add("wrong");
+    nodes[q.answer].classList.add("correct");
+  }
+
+  el.score.textContent = `Score: ${score}`;
+}
+
+el.nextBtn.onclick = () => {
+  if (selected === null) return;
+  if (idx < questions.length-1) {
+    idx++;
     render();
-  </script>
+  } else {
+    showResult();
+  }
+};
+
+function showResult() {
+  document.getElementById("qcard").style.display = "none";
+  el.result.style.display = "block";
+  el.finalScore.textContent = `You scored ${score} / ${questions.length}`;
+}
+
+el.restart.onclick = () => {
+  idx = 0;
+  score = 0;
+  document.getElementById("qcard").style.display = "block";
+  el.result.style.display = "none";
+  render();
+};
+
+el.explainBtn.onclick = () => {
+  el.explain.style.display = "block";
+};
+</script>
+
 </body>
 </html>
