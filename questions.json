@@ -1,0 +1,8 @@
+[
+  {
+    "q": "Sample question",
+    "choices": ["A", "B", "C", "D"],
+    "answer": 0,
+    "explain": "Sample explanation"
+  }
+]
