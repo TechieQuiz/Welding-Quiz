@@ -109,35 +109,48 @@
       </div>
     </main>
   </div>
-
-  <script>
     // QUESTIONS: Edit this array to add or change questions.
     // Each item: { q: "question", choices: [...], answer: indexOfCorrectChoice, explain: "explanation" }
-    const questions = [
-      {
-        q: "According to the handbook, which of the following is NOT one of the four essential conditions required for delayed cracking to occur in the heat-affected zone (HAZ)?",
-        choices: [
-          "The use of high heat input during welding.",
-          "The presence of hydrogen in the weld zone.",
-          "A susceptible microstructure, such as martensite.",
-          "The presence of residual or applied stress."
-        ],
-        answer: 0,
-        explain: "High heat input is described as a preventive measure that reduces the cooling rate, allowing more time for hydrogen to diffuse away — so it's NOT one of the conditions for delayed cracking."
-      },
-      {
-        q: "The presence of hydrogen in the weld zone contributes to what welding problem?",
-        choices: ["Porosity only", "Hydrogen embrittlement & delayed cracking", "Improved ductility", "Reduced hardness"],
-        answer: 1,
-        explain: "Hydrogen in welds can cause hydrogen embrittlement and delayed cracking when other conditions exist."
-      },
-      {
-        q: "What is a common preventive measure to reduce hydrogen induced cracking?",
-        choices: ["Use cold welding", "Increase heat input and preheat the part", "Add more hydrogen during welding", "Use thinner material"],
-        answer: 1,
-        explain: "Preheating or higher heat input slows cooling, allowing hydrogen to diffuse out and reducing risk of delayed cracking."
+    <script>
+  // QUESTIONS will be loaded from questions.json
+  let questions = [];
+
+  // Add a timestamp to always fetch the latest file (no cached old file)
+  function cacheBuster(url) {
+    return url + "?v=" + Date.now();
+  }
+
+  async function loadQuestions() {
+    try {
+      const response = await fetch(cacheBuster("questions.json"));
+      if (!response.ok) {
+        throw new Error("HTTP " + response.status);
       }
-    ];
+      questions = await response.json();
+
+      // safety: if questions is not an array, use a fallback
+      if (!Array.isArray(questions) || questions.length === 0) {
+        throw new Error("No questions found in questions.json");
+      }
+
+      // Start the quiz now that questions are loaded
+      render();
+    } catch (err) {
+      console.error("Failed to load questions.json:", err);
+      // fallback single message so page still runs
+      questions = [{
+        q: "Error: could not load questions.json. Please check the file in your repo.",
+        choices: ["OK"],
+        answer: 0,
+        explain: ""
+      }];
+      render();
+    }
+  }
+
+  // Replace the previous initial render() call — call loader instead
+  loadQuestions();
+</script>
 
     let idx = 0, score = 0, selected = null;
 
