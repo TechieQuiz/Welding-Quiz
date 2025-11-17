@@ -1,280 +1,134 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Welding Quiz</title>
-<style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #eef2ff;
+[
+  {
+    "q": "What does the symbolic designation \"CJP\" indicate on a welding symbol?",
+    "choices": [
+      "Critical Joint Preparation",
+      "Concave Joint Profile",
+      "Carbon Joint Property",
+      "Complete Joint Penetration"
+    ],
+    "answer": 3,
+    "explain": "The CJP symbol indicates Complete Joint Penetration regardless of type of weld or joint geometry."
+  },
+  {
+    "q": "When applying nondestructive examination (NDE) symbols, what designations from welding symbols retain their same location significance?",
+    "choices": [
+      "Melt-Through and Convexity",
+      "Root Opening and Groove Angle",
+      "Arrow side and other side designations",
+      "Pitch and Length of Segments"
+    ],
+    "answer": 2,
+    "explain": "NDE symbols retain the same basic elements and governing rules as welding symbols, so arrow side and other side designations keep their location significance."
+  },
+  {
+    "q": "The objective of performance qualification for an individual is to determine the:",
+    "choices": [
+      "Maximum tensile strength of the welded joint.",
+      "Susceptibility of the joint to lamellar tearing.",
+      "Ability of an individual to deposit sound weld metal with a previously qualified welding procedure.",
+      "Minimum level of heat input required for the process."
+    ],
+    "answer": 2,
+    "explain": "Performance qualification determines the ability of an individual to deposit sound weld metal using a previously qualified welding procedure."
+  },
+  {
+    "q": "Plain carbon steels containing up to 1.7% carbon (C) are classified as what type of steel?",
+    "choices": [
+      "Low carbon types",
+      "Medium carbon steels",
+      "High carbon steels",
+      "Ferritic steels"
+    ],
+    "answer": 2,
+    "explain": "Among plain carbon steels, high carbon steels can contain up to about 1.7% carbon."
+  },
+  {
+    "q": "What effect does the alloying element Chromium have on carbon steel?",
+    "choices": [
+      "Promotes fine grain structure.",
+      "Increases strength and responsiveness to heat treatment, but lowers toughness.",
+      "Increases resistance to corrosion; improves hardness and toughness, and improves the response to heat treatment.",
+      "Significantly lowers the lower transformation temperature."
+    ],
+    "answer": 2,
+    "explain": "Chromium increases corrosion resistance, improves hardness and toughness, and enhances response to heat treatment."
+  },
+  {
+    "q": "What is the area called where metallurgical changes occur in the base metal adjacent to the weld bead that did not melt during the welding process?",
+    "choices": [
+      "The Fusion Zone (FZ)",
+      "The Heat-Affected Zone (HAZ)",
+      "The Weld Metal Zone (WMZ)",
+      "The Transformation Zone (TZ)"
+    ],
+    "answer": 1,
+    "explain": "The region of base metal adjacent to the weld that experienced metallurgical changes but did not melt is called the Heat-Affected Zone (HAZ)."
+  },
+  {
+    "q": "Which of the following is NOT one of the four independent conditions required for the formation of delayed cracks in the HAZ?",
+    "choices": [
+      "The presence of hydrogen",
+      "A susceptible microstructure",
+      "The presence of stress",
+      "High interpass temperature"
+    ],
+    "answer": 3,
+    "explain": "The four conditions are hydrogen presence, susceptible microstructure, presence of stress, and low temperature. High interpass temperature tends to prevent delayed cracking."
+  },
+  {
+    "q": "Lamellar tearing in rolled steel plate is primarily caused by through-thickness stress and is characterized by what specific visual appearance?",
+    "choices": [
+      "Spherical islands of porosity",
+      "A characteristic stepped appearance",
+      "A linear depression below the base metal surface",
+      "Star-shaped cracks in the weld crater"
+    ],
+    "answer": 1,
+    "explain": "Lamellar tearing exhibits a characteristic stepped appearance and occurs under high through-thickness stress in rolled plate."
+  },
+  {
+    "q": "The magnetic phase in austenitic stainless steel weld deposits that helps prevent centerline cracking and fissuring is called:",
+    "choices": [
+      "Martensite",
+      "Pearlite",
+      "Delta ferrite",
+      "Cementite"
+    ],
+    "answer": 2,
+    "explain": "A small fraction of magnetic delta ferrite in an otherwise austenitic weld deposit helps prevent centerline cracking and fissuring."
+  },
+  {
+    "q": "The term often used to denote the amount of offset or mismatch across a butt joint between members of equal thickness is:",
+    "choices": [
+      "Distortion",
+      "Misalignment",
+      "Overlap",
+      "Convexity"
+    ],
+    "answer": 1,
+    "explain": "Misalignment denotes the offset or mismatch across a butt joint between members of equal thickness."
+  },
+  {
+    "q": "Which of the following defines Incomplete Fusion?",
+    "choices": [
+      "A groove weld condition where weld metal does not extend through the joint thickness.",
+      "A depression on the weld face or root surface below the adjacent surface of the base metal.",
+      "A discontinuity in which fusion did not occur between the weld metal and the fusion faces or adjoining weld beads.",
+      "Gas entrapped in solidifying weld metal."
+    ],
+    "answer": 2,
+    "explain": "Incomplete fusion is a discontinuity where fusion did not occur between the weld metal and the fusion faces or adjoining weld beads."
+  },
+  {
+    "q": "Cracks that occur in a metal during solidification or at elevated temperatures are defined as:",
+    "choices": [
+      "Cold cracks",
+      "Underbead cracks",
+      "Hot cracks",
+      "Delayed cracks"
+    ],
+    "answer": 2,
+    "explain": "Cracks occurring during solidification or at elevated temperatures are called hot cracks; cold cracks occur at or near ambient temperature."
   }
-
-  .container {
-    max-width: 800px;
-    margin: 40px auto;
-    background: white;
-    padding: 30px;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  }
-
-  h1 {
-    margin-bottom: 5px;
-    font-size: 32px;
-  }
-
-  #sourceInfo {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 20px;
-  }
-
-  #question {
-    font-size: 20px;
-    margin-bottom: 20px;
-  }
-
-  #choices .choice {
-    display: flex;
-    align-items: center;
-    border: 2px solid #ccc;
-    padding: 14px;
-    border-radius: 12px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    background: #fafafa;
-  }
-
-  .choice.selected {
-    border-color: #6c5ce7;
-    background: #ece9ff;
-  }
-
-  .choice.correct {
-    border-color: #2ecc71;
-    background: #e8ffe8;
-  }
-
-  .choice.wrong {
-    border-color: #e74c3c;
-    background: #ffe8e8;
-  }
-
-  #nextBtn {
-    padding: 12px 24px;
-    font-size: 18px;
-    border-radius: 10px;
-    background: #6c5ce7;
-    color: white;
-    border: none;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-
-  #result {
-    display: none;
-    text-align: center;
-    padding: 30px;
-  }
-
-  #restart {
-    padding: 12px 24px;
-    background: #6c5ce7;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    margin-top: 20px;
-    cursor: pointer;
-  }
-
-  #explainBtn {
-    margin-left: 10px;
-    padding: 8px 16px;
-    border-radius: 8px;
-    border: none;
-    background: #dfe4ff;
-    cursor: pointer;
-  }
-
-  #explain {
-    display: none;
-    margin-top: 12px;
-    font-size: 16px;
-    padding: 12px;
-    border-left: 4px solid #6c5ce7;
-    background: #f4f4ff;
-  }
-
-  #bar {
-    height: 6px;
-    background: #6c5ce7;
-    margin: 20px 0;
-    border-radius: 4px;
-    width: 0%;
-  }
-</style>
-</head>
-
-<body>
-<div class="container">
-  <h1>Welding Quiz</h1>
-  <div id="sourceInfo">Based on 0 questions</div>
-
-  <div id="qcard">
-    <div id="question">Question text</div>
-    <div id="choices"></div>
-
-    <div style="display:flex;align-items:center;margin-top:10px;">
-      <button id="nextBtn">Next</button>
-      <button id="explainBtn">Show Explanation</button>
-    </div>
-
-    <div id="explain"></div>
-    <div id="bar"></div>
-
-    <div style="margin-top:10px;display:flex;justify-content:space-between;">
-      <span id="qnum">1 / 0</span>
-      <span id="score">Score: 0</span>
-    </div>
-  </div>
-
-  <div id="result">
-    <h2>Quiz Completed!</h2>
-    <p id="finalScore"></p>
-    <button id="restart">Restart</button>
-  </div>
-</div>
-
-<!-- ========== LOADER: FETCH questions.json ========== -->
-<script>
-  let questions = [];
-
-  function cacheBuster(url) {
-    return url + "?v=" + Date.now();
-  }
-
-  async function loadQuestions() {
-    try {
-      const response = await fetch(cacheBuster("questions.json"));
-      if (!response.ok) throw new Error("HTTP " + response.status);
-
-      questions = await response.json();
-      if (!Array.isArray(questions) || questions.length === 0)
-        throw new Error("No questions found");
-
-      render();
-    } catch (err) {
-      console.error("Loading failed:", err);
-      questions = [
-        {
-          q: "Error loading questions.json",
-          choices: ["OK"],
-          answer: 0,
-          explain: ""
-        }
-      ];
-      render();
-    }
-  }
-  loadQuestions();
-</script>
-
-<!-- ========== QUIZ ENGINE CODE ========== -->
-<script>
-let idx = 0, score = 0, selected = null;
-
-const el = {
-  question: document.getElementById("question"),
-  choices: document.getElementById("choices"),
-  explain: document.getElementById("explain"),
-  qnum: document.getElementById("qnum"),
-  bar: document.getElementById("bar"),
-  score: document.getElementById("score"),
-  nextBtn: document.getElementById("nextBtn"),
-  explainBtn: document.getElementById("explainBtn"),
-  result: document.getElementById("result"),
-  finalScore: document.getElementById("finalScore"),
-  restart: document.getElementById("restart"),
-  sourceInfo: document.getElementById("sourceInfo")
-};
-
-function render() {
-  selected = null;
-  el.explain.style.display = "none";
-  el.explainBtn.style.display = "none";
-
-  let q = questions[idx];
-  el.question.textContent = q.q;
-
-  el.choices.innerHTML = "";
-  q.choices.forEach((c, i) => {
-    let div = document.createElement("div");
-    div.className = "choice";
-    div.innerHTML = `<b style="width:28px;display:inline-block;color:#6c5ce7;">${String.fromCharCode(65+i)}</b>${c}`;
-    div.addEventListener("click", () => choose(i, div));
-    el.choices.appendChild(div);
-  });
-
-  el.qnum.textContent = `${idx+1} / ${questions.length}`;
-  el.bar.style.width = `${((idx+1)/questions.length)*100}%`;
-  el.score.textContent = `Score: ${score}`;
-  el.nextBtn.textContent = (idx === questions.length-1) ? "Finish" : "Next";
-  el.sourceInfo.textContent = `Based on ${questions.length} questions`;
-}
-
-function choose(i, dom) {
-  if (selected !== null) return;
-  selected = i;
-  let q = questions[idx];
-
-  let nodes = el.choices.children;
-  for (let n of nodes) n.classList.remove("selected","correct","wrong");
-
-  dom.classList.add("selected");
-  el.explain.textContent = q.explain;
-  el.explainBtn.style.display = "inline-block";
-
-  if (i === q.answer) {
-    dom.classList.add("correct");
-    score++;
-  } else {
-    dom.classList.add("wrong");
-    nodes[q.answer].classList.add("correct");
-  }
-
-  el.score.textContent = `Score: ${score}`;
-}
-
-el.nextBtn.onclick = () => {
-  if (selected === null) return;
-  if (idx < questions.length-1) {
-    idx++;
-    render();
-  } else {
-    showResult();
-  }
-};
-
-function showResult() {
-  document.getElementById("qcard").style.display = "none";
-  el.result.style.display = "block";
-  el.finalScore.textContent = `You scored ${score} / ${questions.length}`;
-}
-
-el.restart.onclick = () => {
-  idx = 0;
-  score = 0;
-  document.getElementById("qcard").style.display = "block";
-  el.result.style.display = "none";
-  render();
-};
-
-el.explainBtn.onclick = () => {
-  el.explain.style.display = "block";
-};
-</script>
-
-</body>
-</html>
+]
